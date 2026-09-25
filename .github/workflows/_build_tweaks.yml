@@ -85,13 +85,6 @@ jobs:
           git checkout
           mv *.sdk $THEOS/sdks
 
-      - name: Build YouTube Plus
-        if: ${{ inputs.tweak_version != '' }}
-        run: |
-          git clone --quiet --depth=1 https://github.com/tmpaltstore/YTLite.git
-          cd YTLite && make clean package DEBUG=0 FINALPACKAGE=1
-          mv packages/*.deb ../ytplus.deb
-
       - name: Clone YouTubeHeader
         run: |
           if [ -d "$THEOS/include/YouTubeHeader" ]; then
@@ -111,6 +104,13 @@ jobs:
           else
             cd $THEOS/include && git clone --quiet --depth=1 https://github.com/PoomSmart/PSHeader.git
           fi
+
+      - name: Build YouTube Plus
+        if: ${{ inputs.tweak_version != '' }}
+        run: |
+          git clone --quiet --depth=1 https://github.com/tmpaltstore/YTLite.git
+          cd YTLite && make clean package DEBUG=0 FINALPACKAGE=1
+          mv packages/*.deb ../ytplus.deb
 
       - name: Clone YouPiP
         if: ${{ inputs.enable_youpip }}
